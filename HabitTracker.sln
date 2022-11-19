@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cli", "Cli\Cli.csproj", "{055D2615-ACD0-414A-9628-3E8E7F3D7892}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeLoggerLib", "TimeLoggerLib\TimeLoggerLib.csproj", "{33C73978-7493-451C-B2C7-0EE5B2455D3D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HabitTrackerLib", "HabitTrackerLib\HabitTrackerLib.csproj", "{33C73978-7493-451C-B2C7-0EE5B2455D3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

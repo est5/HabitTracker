@@ -27,6 +27,11 @@ Habit discription: {user.UserHabit.Discription}
                 ");
                 break;
             case 2:
+                if (db.IsHabitExists())
+                {
+                    System.Console.WriteLine($"The habit already exists({user.UserHabit.Name}), you can delete or update the existing one, our supa cool app doesn't support more than 1. YET");
+                    break;
+                }
                 db.AddHabit(UserInput.EnterNewHabit());
                 break;
             case 3:

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\TimeLoggerLib\TimeLoggerLib.csproj" />
+    <ProjectReference Include="..\HabitTrackerLib\HabitTrackerLib.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
