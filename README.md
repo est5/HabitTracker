@@ -1,2 +1,2 @@
-# TimeLogger
+# HabitTracker
 C# project
