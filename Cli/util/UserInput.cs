@@ -8,7 +8,7 @@ namespace Cli.util
         public static User CreateUser()
         {
 
-            System.Console.Write("Enter name:");
+            Console.Write("Enter name:");
             string input = Console.ReadLine()!;
             var user = new User();
 
@@ -16,7 +16,7 @@ namespace Cli.util
             {
                 if (String.IsNullOrWhiteSpace(input))
                 {
-                    System.Console.WriteLine("Enter valid name:");
+                    Console.WriteLine("Enter valid name:");
                     input = Console.ReadLine()!;
                 }
                 else
@@ -34,13 +34,13 @@ namespace Cli.util
 
         public static void DisplayMenu()
         {
-            System.Console.WriteLine("Select option...");
-            System.Console.WriteLine("0 - Exit");
-            System.Console.WriteLine("1 - View habit");
-            System.Console.WriteLine("2 - Add habit");
-            System.Console.WriteLine("3 - Delete habit");
-            System.Console.WriteLine("4 - Update habit");
-            System.Console.WriteLine("---");
+            Console.WriteLine("Select option...");
+            Console.WriteLine("0 - Exit");
+            Console.WriteLine("1 - View habit");
+            Console.WriteLine("2 - Add habit");
+            Console.WriteLine("3 - Delete habit");
+            Console.WriteLine("4 - Update habit");
+            Console.WriteLine("---");
         }
 
         public static Habit EnterNewHabit()
@@ -50,20 +50,20 @@ namespace Cli.util
             string habitMeasurement;
             while (true)
             {
-                System.Console.WriteLine("Enter the habit name: ");
-                var input = System.Console.ReadLine();
+                Console.WriteLine("Enter the habit name: ");
+                var input = Console.ReadLine();
                 if (String.IsNullOrWhiteSpace(input))
                 {
-                    System.Console.WriteLine("Habit must have a name, plz try again");
+                    Console.WriteLine("Habit must have a name, plz try again");
                     continue;
                 }
                 habitName = input;
 
-                System.Console.WriteLine("Enter a habit measurement(for example reps): ");
-                input = System.Console.ReadLine();
+                Console.WriteLine("Enter a habit measurement(for example reps): ");
+                input = Console.ReadLine();
                 if (String.IsNullOrWhiteSpace(input))
                 {
-                    System.Console.WriteLine("Habit must have a measurement, plz try again");
+                    Console.WriteLine("Habit must have a measurement, plz try again");
                     continue;
                 }
                 habitMeasurement = input;
@@ -73,21 +73,21 @@ namespace Cli.util
             while (true)
             {
 
-                System.Console.WriteLine("Enter a habit quantity(for example 10 push ups rep): ");
+                Console.WriteLine("Enter a habit quantity(for example 10 push ups rep): ");
                 try
                 {
-                    habitQuantity = Convert.ToInt32(System.Console.ReadLine());
+                    habitQuantity = Convert.ToInt32(Console.ReadLine());
                 }
-                catch (System.Exception)
+                catch (Exception)
                 {
-                    System.Console.WriteLine("Enter an integer");
+                    Console.WriteLine("Enter an integer");
                     continue;
                 }
                 break;
             }
 
-            System.Console.WriteLine("Enter a habit discription(can be empty): ");
-            string? habitDiscription = System.Console.ReadLine();
+            Console.WriteLine("Enter a habit discription(can be empty): ");
+            string? habitDiscription = Console.ReadLine();
 
             var habit = new Habit(habitQuantity, habitName, habitDiscription, habitMeasurement);
             return habit;
