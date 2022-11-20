@@ -1,8 +1,10 @@
 ﻿using Cli.util;
 using HabitTrackerLib;
+using HabitTrackerLib.DB;
 
 var user = UserInput.CreateUser();
-var db = new DBInMemory(user);
+// swap db (sqlite/inmemory)
+IDbOperations db = new DBInMemory(user);
 
 while (true)
 {
