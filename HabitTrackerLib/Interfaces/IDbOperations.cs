@@ -6,7 +6,7 @@ namespace HabitTrackerLib
         bool IsHabitExists();
         void AddHabit(Habit habit);
         void EditHabit(Habit habit);
-        void DeleteHabit(Habit habit);
+        void DeleteHabit();
 
     }
 }

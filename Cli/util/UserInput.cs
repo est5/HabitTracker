@@ -38,8 +38,8 @@ namespace Cli.util
             System.Console.WriteLine("0 - Exit");
             System.Console.WriteLine("1 - View habit");
             System.Console.WriteLine("2 - Add habit");
-            System.Console.WriteLine("3 - Update habit");
-            System.Console.WriteLine("4 - Delete habit");
+            System.Console.WriteLine("3 - Delete habit");
+            System.Console.WriteLine("4 - Update habit");
             System.Console.WriteLine("---");
         }
 

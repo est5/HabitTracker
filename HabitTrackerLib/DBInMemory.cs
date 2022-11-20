@@ -18,14 +18,14 @@ namespace HabitTrackerLib
             return User.UserHabit is not null;
         }
 
-        public void DeleteHabit(Habit habit)
+        public void DeleteHabit()
         {
-            throw new NotImplementedException();
+            User.UserHabit = null;
         }
 
         public void EditHabit(Habit habit)
         {
-            throw new NotImplementedException();
+            User.UserHabit = habit;
         }
     }
 }
