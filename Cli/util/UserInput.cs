@@ -1,4 +1,4 @@
-using TimeLoggerLib;
+using HabitTrackerLib;
 
 namespace Cli.util
 {
@@ -47,39 +47,49 @@ namespace Cli.util
         {
             string habitName;
             int habitQuantity;
+            string habitMeasurement;
             while (true)
             {
-                System.Console.WriteLine("Enter habit name: ");
+                System.Console.WriteLine("Enter the habit name: ");
                 var input = System.Console.ReadLine();
                 if (String.IsNullOrWhiteSpace(input))
                 {
-                    System.Console.WriteLine("Habit must have name, plz try again");
+                    System.Console.WriteLine("Habit must have a name, plz try again");
                     continue;
                 }
                 habitName = input;
+
+                System.Console.WriteLine("Enter a habit measurement(for example reps): ");
+                input = System.Console.ReadLine();
+                if (String.IsNullOrWhiteSpace(input))
+                {
+                    System.Console.WriteLine("Habit must have a measurement, plz try again");
+                    continue;
+                }
+                habitMeasurement = input;
                 break;
             }
 
             while (true)
             {
 
-                System.Console.WriteLine("Enter habit quantity(for example 10 push ups/day): ");
+                System.Console.WriteLine("Enter a habit quantity(for example 10 push ups rep): ");
                 try
                 {
                     habitQuantity = Convert.ToInt32(System.Console.ReadLine());
                 }
                 catch (System.Exception)
                 {
-                    System.Console.WriteLine("Enter integer");
+                    System.Console.WriteLine("Enter an integer");
                     continue;
                 }
                 break;
             }
 
-            System.Console.WriteLine("Enter habit discription(can be empty): ");
+            System.Console.WriteLine("Enter a habit discription(can be empty): ");
             string? habitDiscription = System.Console.ReadLine();
 
-            var habit = new Habit(habitQuantity, habitName, habitDiscription);
+            var habit = new Habit(habitQuantity, habitName, habitDiscription, habitMeasurement);
             return habit;
         }
 

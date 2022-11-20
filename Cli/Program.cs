@@ -1,5 +1,5 @@
 ﻿using Cli.util;
-using TimeLoggerLib;
+using HabitTrackerLib;
 
 var user = UserInput.CreateUser();
 var db = new DBInMemory(user);
@@ -16,37 +16,36 @@ while (true)
             case 1:
                 if (!db.IsHabitExists())
                 {
-                    System.Console.WriteLine($"\n~~~No habit for user {user.Name}~~~\n");
+                    Console.WriteLine($"\n~~~No habit for user {user.Name}~~~\n");
                     break;
                 }
-                System.Console.WriteLine($@"
+                Console.WriteLine($@"
 {user.Name} tracked habit:
 Habit name: {user.UserHabit.Name}
-Habit quantity: {user.UserHabit.Quantity}
+Habit: {user.UserHabit.Quantity} ({user.UserHabit.Measurement})
 Habit discription: {user.UserHabit.Discription}
                 ");
                 break;
             case 2:
                 if (db.IsHabitExists())
                 {
-                    System.Console.WriteLine($"The habit already exists({user.UserHabit.Name}), you can delete or update the existing one, our supa cool app doesn't support more than 1. YET");
+                    Console.WriteLine($"The habit already exists({user.UserHabit.Name}), you can delete or update the existing one, our supa cool app doesn't support more than 1. YET");
                     break;
                 }
                 db.AddHabit(UserInput.EnterNewHabit());
                 break;
             case 3:
-                System.Console.WriteLine("Not implemented ");
+                Console.WriteLine("Not implemented ");
                 break;
             case 4:
-                System.Console.WriteLine("Not implemented ");
+                Console.WriteLine("Not implemented ");
                 break;
 
         }
     }
-    catch (System.Exception e)
+    catch (Exception)
     {
-        System.Console.WriteLine("Enter number from 0 to 4");
-        System.Console.WriteLine(e.Message);
+        Console.WriteLine("Enter number from 0 to 4");
     };
 
 

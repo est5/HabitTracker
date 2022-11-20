@@ -1,4 +1,4 @@
-namespace TimeLoggerLib
+namespace HabitTrackerLib
 {
     public class DBInMemory : IDbOperations
     {
@@ -6,12 +6,6 @@ namespace TimeLoggerLib
         public DBInMemory(User user)
         {
             User = user;
-            InitDB();
-        }
-
-        private void InitDB()
-        {
-            IsHabitExists();
         }
 
         public void AddHabit(Habit habit)

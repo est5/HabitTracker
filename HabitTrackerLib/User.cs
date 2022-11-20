@@ -1,4 +1,5 @@
-namespace TimeLoggerLib
+
+namespace HabitTrackerLib
 {
     public class User
     {

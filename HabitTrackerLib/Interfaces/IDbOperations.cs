@@ -1,4 +1,4 @@
-namespace TimeLoggerLib
+namespace HabitTrackerLib
 {
     public interface IDbOperations
     {
