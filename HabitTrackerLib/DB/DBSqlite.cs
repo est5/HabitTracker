@@ -26,9 +26,71 @@ public class DBSqlite : IDbOperations
         throw new NotImplementedException();
     }
 
-    public bool IsHabitExists()
+    public bool IsHabitExists(string name)
     {
-        throw new NotImplementedException();
+        using (var connection = new SqliteConnection(CON))
+        {
+            connection.Open();
+            var checkHabit = connection.CreateCommand();
+            checkHabit.CommandText = @"
+        SELECT habit_name FROM user
+        WHERE user_name = @name AND habit_name IS NOT NULL
+        ";
+            SqliteParameter nameParam = new SqliteParameter("@name", SqliteType.Text);
+            nameParam.Value = name;
+            checkHabit.Parameters.Add(nameParam);
+            checkHabit.Prepare();
+            using (SqliteDataReader reader = checkHabit.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+    }
+
+    public bool IsUserExists(string name)
+    {
+        using (var connection = new SqliteConnection(CON))
+        {
+            connection.Open();
+            var checkUser = connection.CreateCommand();
+            checkUser.CommandText = @"
+        SELECT * FROM user
+        WHERE user_name = @name
+        ";
+            SqliteParameter nameParam = new SqliteParameter("@name", SqliteType.Text);
+            nameParam.Value = name;
+            checkUser.Parameters.Add(nameParam);
+            checkUser.Prepare();
+            using (SqliteDataReader reader = checkUser.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+    }
+
+    public void AddUser(User user)
+    {
+        using (var connection = new SqliteConnection(CON))
+        {
+            connection.Open();
+            var createUser = connection.CreateCommand();
+            createUser.CommandText = @"
+        INSERT INTO user (user_name) VALUES(@name)
+        ";
+            SqliteParameter nameParam = new SqliteParameter("@name", SqliteType.Text);
+            nameParam.Value = user.Name;
+            createUser.Parameters.Add(nameParam);
+            createUser.Prepare();
+            createUser.ExecuteNonQuery();
+        }
     }
 
     private void InitDB()
@@ -38,24 +100,15 @@ public class DBSqlite : IDbOperations
         {
             connection.Open();
 
-            var createTableHabit = connection.CreateCommand();
-            createTableHabit.CommandText = @"
-CREATE TABLE IF NOT EXISTS habits(
-habit_id integer PRIAMRY KEY,
-name text NOT NULL,
-measurement text NOT NULL,
-quantity integer NOT NULL,
-description text
-)";
-            createTableHabit.ExecuteNonQuery();
-
             var createTableUser = connection.CreateCommand();
             createTableUser.CommandText = @"
 CREATE TABLE IF NOT EXISTS user(
 user_id integer PRIMARY KEY,
-user_name text NOT NULL,
-habit_id integer integer NOT NULL,
-FOREIGN KEY (habit_id) REFERENCES habits (habit_id)
+user_name text ,
+habit_name text ,
+measurement text ,
+quantity integer ,
+description text
 )";
 
             createTableUser.ExecuteNonQuery();

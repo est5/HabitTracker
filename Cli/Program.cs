@@ -2,13 +2,41 @@
 using HabitTrackerLib;
 using HabitTrackerLib.DB;
 
-var user = UserInput.CreateUser();
-// swap db (sqlite/inmemory)
-// IDbOperations db = new DBInMemory(user);
-IDbOperations db = new DBSqlite();
+var db = new DBSqlite();
+// shhh...
+createUsr: var user = UserInput.CreateUser();
 
+if (!db.IsUserExists(user.Name!))
+{
+    db.AddUser(user);
+}
+else
+{
+    while (true)
+    {
+        try
+        {
 
-while (false)
+            Console.WriteLine("User exists");
+            Console.WriteLine($"0 - exit | 1 - create new | 2 - continue with {user.Name}");
+            int input = Convert.ToInt32(Console.ReadLine());
+            switch (input)
+            {
+                case 0: return;
+                case 1: goto createUsr;
+                case 2: goto usrCreated;
+            }
+        }
+        catch (System.Exception)
+        {
+            Console.WriteLine("Please input an integer");
+            continue;
+        }
+    }
+}
+// ffs
+usrCreated:
+while (true)
 {
     UserInput.DisplayMenu();
     try
@@ -18,7 +46,7 @@ while (false)
         {
             case 0: return;
             case 1:
-                if (!db.IsHabitExists())
+                if (!db.IsHabitExists(user.Name))
                 {
                     Console.WriteLine($"\n~~~No habit for user {user.Name}~~~\n");
                     break;
@@ -31,7 +59,7 @@ Habit discription: {user.UserHabit.Discription}
                 ");
                 break;
             case 2:
-                if (db.IsHabitExists())
+                if (db.IsHabitExists(user.Name))
                 {
                     Console.WriteLine($"The habit already exists({user.UserHabit.Name}), you can delete or update the existing one, our supa cool app doesn't support more than 1. YET");
                     break;
@@ -39,7 +67,7 @@ Habit discription: {user.UserHabit.Discription}
                 db.AddHabit(UserInput.EnterNewHabit());
                 break;
             case 3:
-                if (!db.IsHabitExists())
+                if (!db.IsHabitExists(user.Name))
                 {
                     Console.WriteLine($"\n~~~No habit for user {user.Name}~~~\n");
                     break;
@@ -47,7 +75,7 @@ Habit discription: {user.UserHabit.Discription}
                 db.DeleteHabit();
                 break;
             case 4:
-                if (!db.IsHabitExists())
+                if (!db.IsHabitExists(user.Name))
                 {
                     Console.WriteLine($"\n~~~No habit for user {user.Name}~~~\n");
                     break;
@@ -105,9 +133,10 @@ Habit discription: {user.UserHabit.Discription}
                             break;
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     Console.WriteLine("Enter number from 0 to 4");
+                    System.Console.WriteLine(e.Message);
 
                 }
 

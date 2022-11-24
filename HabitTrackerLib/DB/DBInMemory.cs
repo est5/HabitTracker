@@ -27,4 +27,9 @@ public class DBInMemory : IDbOperations
     {
         User.UserHabit = habit;
     }
+
+    public bool IsHabitExists(string name)
+    {
+        throw new NotImplementedException();
+    }
 }
