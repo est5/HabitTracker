@@ -3,7 +3,7 @@ using HabitTrackerLib;
 using HabitTrackerLib.DB;
 
 var db = new DBSqlite();
-// shhh...
+// Goto label from user creation
 createUsr: var user = UserInput.CreateUser();
 
 if (!db.IsUserExists(user.Name!))
@@ -34,7 +34,7 @@ else
         }
     }
 }
-// ffs
+
 usrCreated:
 while (true)
 {
@@ -51,6 +51,7 @@ while (true)
                     Console.WriteLine($"\n~~~No habit for user {user.Name}~~~\n");
                     break;
                 }
+                // TODO : Fetch user here and "destructure"
                 Console.WriteLine($@"
 {user.Name} tracked habit:
 Habit name: {user.UserHabit.Name}
@@ -72,6 +73,7 @@ Habit discription: {user.UserHabit.Discription}
                     Console.WriteLine($"\n~~~No habit for user {user.Name}~~~\n");
                     break;
                 }
+                // TODO: just delete by name
                 db.DeleteHabit();
                 break;
             case 4:
@@ -80,6 +82,7 @@ Habit discription: {user.UserHabit.Discription}
                     Console.WriteLine($"\n~~~No habit for user {user.Name}~~~\n");
                     break;
                 }
+                // TODO: holy shit...
                 // db.EditHabit(user.UserHabit);
                 Console.WriteLine($@"
 {user.Name} tracked habit:
