@@ -11,9 +11,43 @@ public class DBSqlite : IDbOperations
         InitDB();
     }
 
-    public void AddHabit(Habit habit)
+    public void AddHabit(Habit habit, User user)
     {
-        throw new NotImplementedException();
+        using (var connection = new SqliteConnection(CON))
+        {
+            connection.Open();
+            var createHabit = connection.CreateCommand();
+            createHabit.CommandText = @"
+        UPDATE user
+        SET habit_name = @name, measurement = @measurement, quantity = @quantity, discription = @discription
+        WHERE user_name = @user_name
+        ";
+            SqliteParameter nameParam = new SqliteParameter("@name", SqliteType.Text);
+            nameParam.Value = habit.Name;
+            createHabit.Parameters.Add(nameParam);
+
+            SqliteParameter measurement = new SqliteParameter("@measurement", SqliteType.Text);
+            measurement.Value = habit.Measurement;
+            createHabit.Parameters.Add(measurement);
+
+
+            SqliteParameter quantity = new SqliteParameter("@quantity", SqliteType.Integer);
+            quantity.Value = habit.Quantity;
+            createHabit.Parameters.Add(quantity);
+
+
+            SqliteParameter discription = new SqliteParameter("@discription", SqliteType.Text);
+            discription.Value = habit.Discription;
+            createHabit.Parameters.Add(discription);
+
+            SqliteParameter usrName = new SqliteParameter("@user_name", SqliteType.Text);
+            usrName.Value = user.Name;
+            createHabit.Parameters.Add(usrName);
+            System.Console.WriteLine("Here");
+
+            createHabit.Prepare();
+            createHabit.ExecuteNonQuery();
+        }
     }
 
     public void DeleteHabit()
@@ -108,7 +142,7 @@ user_name text ,
 habit_name text ,
 measurement text ,
 quantity integer ,
-description text
+discription text
 )";
 
             createTableUser.ExecuteNonQuery();
@@ -118,5 +152,10 @@ description text
 
 
 
+    }
+
+    public void AddHabit(Habit habit)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -61,10 +61,10 @@ Habit discription: {user.UserHabit.Discription}
             case 2:
                 if (db.IsHabitExists(user.Name))
                 {
-                    Console.WriteLine($"The habit already exists({user.UserHabit.Name}), you can delete or update the existing one, our supa cool app doesn't support more than 1. YET");
+                    Console.WriteLine($"The habit already exists, you can delete or update the existing one, our supa cool app doesn't support more than 1. YET");
                     break;
                 }
-                db.AddHabit(UserInput.EnterNewHabit());
+                db.AddHabit(UserInput.EnterNewHabit(), user);
                 break;
             case 3:
                 if (!db.IsHabitExists(user.Name))
