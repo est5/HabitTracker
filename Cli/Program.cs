@@ -4,9 +4,11 @@ using HabitTrackerLib.DB;
 
 var user = UserInput.CreateUser();
 // swap db (sqlite/inmemory)
-IDbOperations db = new DBInMemory(user);
+// IDbOperations db = new DBInMemory(user);
+IDbOperations db = new DBSqlite();
 
-while (true)
+
+while (false)
 {
     UserInput.DisplayMenu();
     try
