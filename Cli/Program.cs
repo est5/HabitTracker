@@ -112,7 +112,8 @@ Habit discription: {usrEditModel.Discription}
                             db.UpdateHabit(usrHabit, user);
                             break;
                         case 3:
-                            while (true)
+                            var flag = true;
+                            while (flag)
                             {
                                 try
                                 {
@@ -120,7 +121,7 @@ Habit discription: {usrEditModel.Discription}
                                     int quantityInput = Convert.ToInt32(Console.ReadLine());
                                     usrHabit.Quantity = quantityInput;
                                     db.UpdateHabit(usrHabit, user);
-                                    return;
+                                    flag = false;
                                 }
                                 catch (System.Exception)
                                 {
@@ -128,6 +129,7 @@ Habit discription: {usrEditModel.Discription}
                                     continue;
                                 }
                             }
+                            break;
                         case 4:
                             Console.WriteLine("Enter new discription: ");
                             string discriptionInput = Console.ReadLine();
