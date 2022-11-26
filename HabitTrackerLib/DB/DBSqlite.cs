@@ -43,19 +43,34 @@ public class DBSqlite : IDbOperations
             SqliteParameter usrName = new SqliteParameter("@user_name", SqliteType.Text);
             usrName.Value = user.Name;
             createHabit.Parameters.Add(usrName);
-            System.Console.WriteLine("Here");
 
             createHabit.Prepare();
             createHabit.ExecuteNonQuery();
         }
     }
 
-    public void DeleteHabit()
+    public void DeleteHabit(string userName)
     {
-        throw new NotImplementedException();
+        using (var connection = new SqliteConnection(CON))
+        {
+            connection.Open();
+            var delete = connection.CreateCommand();
+            delete.CommandText = @"
+            UPDATE user
+            SET habit_name = NULL, measurement = NULL, quantity = NULL, discription = NULL
+            WHERE user_name = @name
+            ";
+
+            SqliteParameter usrName = new SqliteParameter("@name", SqliteType.Text);
+            usrName.Value = userName;
+            delete.Parameters.Add(usrName);
+
+            delete.Prepare();
+            delete.ExecuteNonQuery();
+        }
     }
 
-    public void EditHabit(Habit habit)
+    public void EditHabit(string userName)
     {
         throw new NotImplementedException();
     }
@@ -154,8 +169,4 @@ discription text
 
     }
 
-    public void AddHabit(Habit habit)
-    {
-        throw new NotImplementedException();
-    }
 }

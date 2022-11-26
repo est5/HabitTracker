@@ -52,6 +52,7 @@ while (true)
                     break;
                 }
                 // TODO : Fetch user here and "destructure"
+
                 Console.WriteLine($@"
 {user.Name} tracked habit:
 Habit name: {user.UserHabit.Name}
@@ -74,7 +75,7 @@ Habit discription: {user.UserHabit.Discription}
                     break;
                 }
                 // TODO: just delete by name
-                db.DeleteHabit();
+                db.DeleteHabit(user.Name);
                 break;
             case 4:
                 if (!db.IsHabitExists(user.Name))
@@ -101,13 +102,13 @@ Habit discription: {user.UserHabit.Discription}
                             Console.WriteLine("Enter new name: ");
                             string nameInput = Console.ReadLine();
                             user.UserHabit.Name = nameInput;
-                            db.EditHabit(user.UserHabit);
+                            db.EditHabit(user.Name);
                             break;
                         case 2:
                             Console.WriteLine("Enter new measurement: ");
                             string measurementInput = Console.ReadLine();
                             user.UserHabit.Measurement = measurementInput;
-                            db.EditHabit(user.UserHabit);
+                            db.EditHabit(user.Name);
                             break;
                         case 3:
                             while (true)
@@ -117,7 +118,7 @@ Habit discription: {user.UserHabit.Discription}
                                     Console.WriteLine("Enter new quantity: ");
                                     int quantityInput = Convert.ToInt32(Console.ReadLine());
                                     user.UserHabit.Quantity = quantityInput;
-                                    db.EditHabit(user.UserHabit);
+                                    db.EditHabit(user.Name);
                                     return;
                                 }
                                 catch (System.Exception)
@@ -130,7 +131,7 @@ Habit discription: {user.UserHabit.Discription}
                             Console.WriteLine("Enter new discription: ");
                             string discriptionInput = Console.ReadLine();
                             user.UserHabit.Discription = discriptionInput;
-                            db.EditHabit(user.UserHabit);
+                            db.EditHabit(user.Name);
                             break;
                         case 0:
                             break;
