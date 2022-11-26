@@ -1,3 +1,4 @@
+using HabitTrackerLib.Model;
 using Microsoft.Data.Sqlite;
 
 namespace HabitTrackerLib.DB;
@@ -11,6 +12,23 @@ public class DBSqlite : IDbOperations
         InitDB();
     }
 
+    public void AddUser(User user)
+    {
+        using (var connection = new SqliteConnection(CON))
+        {
+            connection.Open();
+            var createUser = connection.CreateCommand();
+            createUser.CommandText = @"
+            INSERT INTO user (user_name) VALUES(@name)
+            ";
+            SqliteParameter nameParam = new SqliteParameter("@name", SqliteType.Text);
+            nameParam.Value = user.Name;
+            createUser.Parameters.Add(nameParam);
+            createUser.Prepare();
+            createUser.ExecuteNonQuery();
+        }
+    }
+
     public void AddHabit(Habit habit, User user)
     {
         using (var connection = new SqliteConnection(CON))
@@ -18,10 +36,10 @@ public class DBSqlite : IDbOperations
             connection.Open();
             var createHabit = connection.CreateCommand();
             createHabit.CommandText = @"
-        UPDATE user
-        SET habit_name = @name, measurement = @measurement, quantity = @quantity, discription = @discription
-        WHERE user_name = @user_name
-        ";
+            UPDATE user
+            SET habit_name = @name, measurement = @measurement, quantity = @quantity, discription = @discription
+            WHERE user_name = @user_name
+            ";
             SqliteParameter nameParam = new SqliteParameter("@name", SqliteType.Text);
             nameParam.Value = habit.Name;
             createHabit.Parameters.Add(nameParam);
@@ -82,9 +100,9 @@ public class DBSqlite : IDbOperations
             connection.Open();
             var checkHabit = connection.CreateCommand();
             checkHabit.CommandText = @"
-        SELECT habit_name FROM user
-        WHERE user_name = @name AND habit_name IS NOT NULL
-        ";
+            SELECT habit_name FROM user
+            WHERE user_name = @name AND habit_name IS NOT NULL
+            ";
             SqliteParameter nameParam = new SqliteParameter("@name", SqliteType.Text);
             nameParam.Value = name;
             checkHabit.Parameters.Add(nameParam);
@@ -107,9 +125,9 @@ public class DBSqlite : IDbOperations
             connection.Open();
             var checkUser = connection.CreateCommand();
             checkUser.CommandText = @"
-        SELECT * FROM user
-        WHERE user_name = @name
-        ";
+            SELECT * FROM user
+            WHERE user_name = @name
+            ";
             SqliteParameter nameParam = new SqliteParameter("@name", SqliteType.Text);
             nameParam.Value = name;
             checkUser.Parameters.Add(nameParam);
@@ -125,21 +143,33 @@ public class DBSqlite : IDbOperations
         }
     }
 
-    public void AddUser(User user)
+    public UserModel GetUserInfo(string name)
     {
+        var model = new UserModel(name);
         using (var connection = new SqliteConnection(CON))
         {
             connection.Open();
-            var createUser = connection.CreateCommand();
-            createUser.CommandText = @"
-        INSERT INTO user (user_name) VALUES(@name)
-        ";
+            var getUser = connection.CreateCommand();
+            getUser.CommandText = @"
+            SELECT user_name, habit_name, measurement, quantity, discription FROM user
+            WHERE user_name = @name
+            ";
             SqliteParameter nameParam = new SqliteParameter("@name", SqliteType.Text);
-            nameParam.Value = user.Name;
-            createUser.Parameters.Add(nameParam);
-            createUser.Prepare();
-            createUser.ExecuteNonQuery();
+            nameParam.Value = name;
+            getUser.Parameters.Add(nameParam);
+            getUser.Prepare();
+
+            var reader = getUser.ExecuteReader();
+            while (reader.Read())
+            {
+                model.HabitName = Convert.ToString(reader[1]);
+                model.Measurement = Convert.ToString(reader[2]);
+                model.Quantity = Convert.ToInt32(reader[3]);
+                model.Discription = Convert.ToString(reader[4]);
+            }
+            reader.Close();
         }
+        return model;
     }
 
     private void InitDB()
@@ -151,14 +181,14 @@ public class DBSqlite : IDbOperations
 
             var createTableUser = connection.CreateCommand();
             createTableUser.CommandText = @"
-CREATE TABLE IF NOT EXISTS user(
-user_id integer PRIMARY KEY,
-user_name text ,
-habit_name text ,
-measurement text ,
-quantity integer ,
-discription text
-)";
+            CREATE TABLE IF NOT EXISTS user(
+            user_id integer PRIMARY KEY,
+            user_name text ,
+            habit_name text ,
+            measurement text ,
+            quantity integer ,
+            discription text
+            )";
 
             createTableUser.ExecuteNonQuery();
 

@@ -52,12 +52,12 @@ while (true)
                     break;
                 }
                 // TODO : Fetch user here and "destructure"
-
+                var usrModel = db.GetUserInfo(user.Name);
                 Console.WriteLine($@"
-{user.Name} tracked habit:
-Habit name: {user.UserHabit.Name}
-Habit: {user.UserHabit.Quantity} ({user.UserHabit.Measurement})
-Habit discription: {user.UserHabit.Discription}
+{usrModel.UserName} tracked habit:
+Habit name: {usrModel.HabitName}
+Habit: {usrModel.Quantity} ({usrModel.Measurement})
+Habit discription: {usrModel.Discription}
                 ");
                 break;
             case 2:

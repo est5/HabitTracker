@@ -1,6 +1,6 @@
 namespace HabitTrackerLib.Model;
 
-class UserModel
+public class UserModel
 {
     public string UserName { get; set; }
 
