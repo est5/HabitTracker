@@ -74,7 +74,6 @@ Habit discription: {user.UserHabit.Discription}
                     Console.WriteLine($"\n~~~No habit for user {user.Name}~~~\n");
                     break;
                 }
-                // TODO: just delete by name
                 db.DeleteHabit(user.Name);
                 break;
             case 4:
