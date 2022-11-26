@@ -88,10 +88,7 @@ public class DBSqlite : IDbOperations
         }
     }
 
-    public void EditHabit(string userName)
-    {
-        throw new NotImplementedException();
-    }
+    public void UpdateHabit(Habit habit, User user) => AddHabit(habit, user);
 
     public bool IsHabitExists(string name)
     {

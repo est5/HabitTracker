@@ -51,7 +51,6 @@ while (true)
                     Console.WriteLine($"\n~~~No habit for user {user.Name}~~~\n");
                     break;
                 }
-                // TODO : Fetch user here and "destructure"
                 var usrModel = db.GetUserInfo(user.Name);
                 Console.WriteLine($@"
 {usrModel.UserName} tracked habit:
@@ -63,7 +62,7 @@ Habit discription: {usrModel.Discription}
             case 2:
                 if (db.IsHabitExists(user.Name))
                 {
-                    Console.WriteLine($"The habit already exists, you can delete or update the existing one, our supa cool app doesn't support more than 1. YET");
+                    Console.WriteLine($"The habit already exists, you can delete or update the existing one, our supa cool app doesn't support more than 1.");
                     break;
                 }
                 db.AddHabit(UserInput.EnterNewHabit(), user);
@@ -82,13 +81,16 @@ Habit discription: {usrModel.Discription}
                     Console.WriteLine($"\n~~~No habit for user {user.Name}~~~\n");
                     break;
                 }
-                // TODO: holy shit...
-                // db.EditHabit(user.UserHabit);
+                var usrEditModel = db.GetUserInfo(user.Name);
+                var usrHabit = new Habit((int)usrEditModel.Quantity,
+                                         usrEditModel.HabitName,
+                                         usrEditModel.Discription,
+                                         usrEditModel.Measurement);
                 Console.WriteLine($@"
-{user.Name} tracked habit:
-Habit name: {user.UserHabit.Name}
-Habit: {user.UserHabit.Quantity} ({user.UserHabit.Measurement})
-Habit discription: {user.UserHabit.Discription}
+{usrEditModel.UserName} tracked habit:
+Habit name: {usrEditModel.HabitName}
+Habit: {usrEditModel.Quantity} ({usrEditModel.Measurement})
+Habit discription: {usrEditModel.Discription}
 0 - exit | 1 - name | 2 - measurement | 3 - quantity | 4 - discription
                 ");
                 Console.WriteLine("Select field to edit");
@@ -100,14 +102,14 @@ Habit discription: {user.UserHabit.Discription}
                         case 1:
                             Console.WriteLine("Enter new name: ");
                             string nameInput = Console.ReadLine();
-                            user.UserHabit.Name = nameInput;
-                            db.EditHabit(user.Name);
+                            usrHabit.Name = nameInput;
+                            db.UpdateHabit(usrHabit, user);
                             break;
                         case 2:
                             Console.WriteLine("Enter new measurement: ");
                             string measurementInput = Console.ReadLine();
-                            user.UserHabit.Measurement = measurementInput;
-                            db.EditHabit(user.Name);
+                            usrHabit.Measurement = measurementInput;
+                            db.UpdateHabit(usrHabit, user);
                             break;
                         case 3:
                             while (true)
@@ -116,8 +118,8 @@ Habit discription: {user.UserHabit.Discription}
                                 {
                                     Console.WriteLine("Enter new quantity: ");
                                     int quantityInput = Convert.ToInt32(Console.ReadLine());
-                                    user.UserHabit.Quantity = quantityInput;
-                                    db.EditHabit(user.Name);
+                                    usrHabit.Quantity = quantityInput;
+                                    db.UpdateHabit(usrHabit, user);
                                     return;
                                 }
                                 catch (System.Exception)
@@ -129,8 +131,8 @@ Habit discription: {user.UserHabit.Discription}
                         case 4:
                             Console.WriteLine("Enter new discription: ");
                             string discriptionInput = Console.ReadLine();
-                            user.UserHabit.Discription = discriptionInput;
-                            db.EditHabit(user.Name);
+                            usrHabit.Discription = discriptionInput;
+                            db.UpdateHabit(usrHabit, user);
                             break;
                         case 0:
                             break;
